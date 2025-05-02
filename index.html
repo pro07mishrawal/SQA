@@ -4,6 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Kaun Banega Crorepati</title>
   <style>
+    /* [Same CSS as before] */
     body {
       font-family: 'Segoe UI', sans-serif;
       background-color: #0b1f3a;
@@ -154,8 +155,8 @@
     ];
 
     const prizeLevels = [
-      2500000, 1250000, 640000, 320000, 160000, 
-      80000, 40000, 20000, 10000, 5000, 
+      2500000, 1250000, 640000, 320000, 160000,
+      80000, 40000, 20000, 10000, 5000,
       2000, 1000
     ]; // reversed
 
@@ -163,6 +164,7 @@
     let currentPrize = 0;
     let timeLeft = 20;
     let timer;
+    let recognizing = false;
 
     const questionEl = document.getElementById("question");
     const optionsEl = document.getElementById("options");
@@ -170,6 +172,33 @@
     const lockMsgEl = document.getElementById("lock-msg");
     const timerEl = document.getElementById("timer");
     const prizeLevelsEl = document.getElementById("prize-levels");
+
+    let recognition;
+
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognition = new SpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.lang = 'en-US';
+
+      recognition.onresult = function(event) {
+        const transcript = event.results[0][0].transcript.trim().toUpperCase();
+        const letter = transcript[0];
+        const index = letter.charCodeAt(0) - 65;
+        if (index >= 0 && index <= 3) {
+          lockMsgEl.textContent = `🔒 Computer ji, option ${letter} ko lock kiya jaye...`;
+          disableButtons();
+          setTimeout(() => lockAnswer(index), 2000);
+        }
+      };
+
+      recognition.onerror = function(event) {
+        console.error("Speech recognition error:", event.error);
+      };
+    } else {
+      alert("Sorry, your browser does not support voice recognition.");
+    }
 
     function startTimer() {
       timeLeft = 20;
@@ -196,23 +225,31 @@
         const btn = document.createElement("button");
         btn.className = "option-btn";
         btn.textContent = `${String.fromCharCode(65 + i)}. ${opt}`;
-        btn.onclick = () => handleSelection(btn, i);
+        btn.disabled = true;
         optionsEl.appendChild(btn);
       });
 
       updatePrizeLevels();
       startTimer();
+      startListening();
     }
 
-    function handleSelection(button, index) {
-      disableButtons();
-      lockMsgEl.textContent = `🔒 Computer ji, option ${String.fromCharCode(65 + index)} ko lock kiya jaye...`;
-      setTimeout(() => {
-        lockAnswer(index);
-      }, 2000);
+    function startListening() {
+      if (recognition) {
+        recognition.start();
+        recognizing = true;
+      }
+    }
+
+    function stopListening() {
+      if (recognition && recognizing) {
+        recognition.stop();
+        recognizing = false;
+      }
     }
 
     function lockAnswer(index) {
+      stopListening();
       clearInterval(timer);
       const correct = questions[currentQuestion].answer;
       const buttons = document.querySelectorAll(".option-btn");
