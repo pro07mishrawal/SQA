@@ -18,6 +18,16 @@
     }
 
     .container {
+  background-image: url("/mnt/data/KAUN_BANEGA_CROREPATI_SEASON_11.jpg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-color: #152d53; /* fallback */
+  position: relative;
+  padding-top: 180px; /* adjust to push text below the logo */
+}
+
+    .container {
       background-color: #152d53;
       padding: 20px;
       border-radius: 10px;
