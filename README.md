@@ -27,13 +27,7 @@
   padding-top: 180px; /* adjust to push text below the logo */
 }
 
-    .container {
-      background-color: #152d53;
-      padding: 20px;
-      border-radius: 10px;
-      width: 700px;
-      margin: 20px;
-    }
+    
 
     h1 {
       text-align: center;
@@ -43,9 +37,11 @@
     }
 
     #question {
-      font-size: 1.4em;
-      margin: 20px 0;
-    }
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 10px;
+  border-radius: 5px;
+}
+
 
     .options {
       display: flex;
