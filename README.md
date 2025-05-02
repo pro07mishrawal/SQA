@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -127,4 +126,86 @@
       { question: "Atomic number of Oxygen?", category: "Chemistry", options: ["6", "7", "8", "9"], answer: 2 },
 
       // Physics
-      { question: "What is the speed of light?", category: "Physics", options: ["299,792,458 m/s", "300,000,000 m/s", "150,000,000 m/s", "3,000 m/s"], answer: 0
+      { question: "What is the speed of light?", category: "Physics", options: ["299,792,458 m/s", "300,000,000 m/s", "150,000,000 m/s", "3,000 m/s"], answer: 0 },
+      { question: "Who discovered gravity?", category: "Physics", options: ["Einstein", "Newton", "Tesla", "Faraday"], answer: 1 },
+    ];
+
+    const prizeLevels = [
+      1000, 2000, 5000, 10000, 20000, 
+      40000, 80000, 160000, 320000, 640000, 
+      1250000, 2500000
+    ];
+
+    let currentQuestion = 0;
+    let currentPrize = 0;
+    let lifelineUsed = false;
+
+    const questionEl = document.getElementById("question");
+    const prizeEl = document.getElementById("prize");
+    const resultEl = document.getElementById("result");
+    const optionBtns = document.querySelectorAll(".option-btn");
+    const lifelineBtn = document.getElementById("lifeline-btn");
+    const categoryEl = document.getElementById("category");
+
+    function loadQuestion() {
+      const q = questions[currentQuestion];
+      questionEl.textContent = q.question;
+      categoryEl.textContent = `Category: ${q.category}`;
+      optionBtns.forEach((btn, index) => {
+        btn.textContent = `${String.fromCharCode(65 + index)}. ${q.options[index]}`;
+        btn.disabled = false;
+        btn.style.visibility = "visible";
+        btn.classList.remove("correct", "incorrect");
+      });
+      resultEl.textContent = "";
+      prizeEl.textContent = `Prize: ₹${currentPrize}`;
+    }
+
+    function selectAnswer(index) {
+      const correct = questions[currentQuestion].answer;
+      optionBtns.forEach((btn, idx) => {
+        btn.disabled = true;
+        if (idx === correct) btn.classList.add("correct");
+        if (idx === index && idx !== correct) btn.classList.add("incorrect");
+      });
+
+      if (index === correct) {
+        currentPrize = prizeLevels[currentQuestion];
+        resultEl.textContent = `✅ Correct! You won ₹${currentPrize}`;
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+          setTimeout(loadQuestion, 1500);
+        } else {
+          resultEl.textContent = `🏆 Congratulations! You are a Crorepati! Total: ₹${currentPrize}`;
+        }
+      } else {
+        resultEl.textContent = `❌ Wrong! Correct answer was: ${questions[currentQuestion].options[correct]}`;
+      }
+    }
+
+    function useLifeline() {
+      if (lifelineUsed) return;
+      lifelineUsed = true;
+      lifelineBtn.disabled = true;
+
+      const correct = questions[currentQuestion].answer;
+      let hidden = 0;
+      while (hidden < 2) {
+        const rand = Math.floor(Math.random() * 4);
+        if (rand !== correct && optionBtns[rand].style.visibility !== "hidden") {
+          optionBtns[rand].style.visibility = "hidden";
+          hidden++;
+        }
+      }
+    }
+
+    function quitGame() {
+      resultEl.textContent = `🏁 You quit! Total winnings: ₹${currentPrize}`;
+      optionBtns.forEach(btn => btn.disabled = true);
+      lifelineBtn.disabled = true;
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
