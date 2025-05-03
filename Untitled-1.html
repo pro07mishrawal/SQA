@@ -120,7 +120,7 @@
 </head>
 <body>
   <div class="container">
-    <h1>🪙 Kaun Banega Crorepati 🪙</h1>
+    <h1>🪙 Ko Banxa Crorepati 🪙</h1>
     <div id="prize">Prize: ₹0</div>
     <div id="category">Category: General Knowledge</div>
     <div id="timer">⏳ Time left: 20s</div>
