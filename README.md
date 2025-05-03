@@ -118,18 +118,7 @@
     }
   </style>
 </head>
-body{
-  font-family: Arial, sans-serif;
-  background: url('Kbc_nepal_-_poster.jpg') no-repeat center center fixed;
-  background-size: cover;
-  color: #ffffff;
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-start;
-  height: 100vh;
-  margin: 0;
-  padding: 20px;
-}
+<body>
 
   <div class="container">
     <h1>🪙 Ko Banxa Crorepati 🪙</h1>
