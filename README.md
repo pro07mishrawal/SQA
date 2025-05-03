@@ -192,7 +192,7 @@
     { question: "Who discovered gravity?", category: "Physics", options: ["Einstein", "Newton", "Tesla", "Faraday"], answer: 1 }
   ];
 
-    const prizeLevels = [1000, 2000, 5000, 10000, 20000, 40000, 80000, 160000, 320000, 640000, 1250000, 2500000];
+     const prizeLevels = [1000, 5000, 10000, 40000, 100000, 160000, 320000, 640000, 1250000, 2500000, 50000000, 10000000];
 
     let currentQuestion = 0;
     let selectedOption = -1;
