@@ -11,6 +11,18 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: -1;">
 </div>
+body {
+  font-family: Arial, sans-serif;
+  background: url('kbc_nepal_poster.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  height: 100vh;
+  margin: 0;
+  padding: 20px;
+}
 
       font-family: Arial, sans-serif;
       background-color: #0f3057;
