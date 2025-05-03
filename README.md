@@ -118,21 +118,7 @@ font-family: Arial, sans-serif;
   </style>
 </head>
 <body>
-<div style="
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: -1;">
-  
-</div>
-background: url('images/kbc_nepal_poster.jpg') no-repeat center center fixed;
 
-<div style="
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: -1;">
-</div>
 
 
   <div class="container">
