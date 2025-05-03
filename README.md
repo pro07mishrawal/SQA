@@ -2,7 +2,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kaun Banega Crorepati</title>
+  <title>Ko Bancha Crorepati</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -119,7 +119,7 @@
   </style>
 </head>
 <body>
-  body {
+  {
   font-family: Arial, sans-serif;
   background: url('Kbc_nepal_-_poster.jpg') no-repeat center center fixed;
   background-size: cover;
@@ -134,9 +134,9 @@
 
   <div class="container">
     <h1>🪙 Ko Banxa Crorepati 🪙</h1>
-    <div id="prize">Prize: ₹0</div>
+    <div id="prize">Prize: ₹1000</div>
     <div id="category">Category: General Knowledge</div>
-    <div id="timer">⏳ Time left: 20s</div>
+    <div id="timer">⏳ Time left: 30s</div>
     <div id="question-box">
       <h2 id="question">Loading...</h2>
       <div class="options">
@@ -205,7 +205,7 @@
     { question: "Who discovered gravity?", category: "Physics", options: ["Einstein", "Newton", "Tesla", "Faraday"], answer: 1 }
   ];
 
-     const prizeLevels = [1000, 5000, 10000, 40000, 100000, 160000, 320000, 640000, 1250000, 2500000, 50000000, 10000000];
+     const prizeLevels = [1000, 5000, 10000, 40000, 100000, 160000, 500000, 640000, 1250000, 2500000, 50000000, 10000000];
 
     let currentQuestion = 0;
     let selectedOption = -1;
