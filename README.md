@@ -183,7 +183,7 @@ font-family: Arial, sans-serif;
     { question: "What is the capital of Australia?", category: "General Knowledge", options: ["Sydney", " Melbourne, "Canberra", "Brisbane"], answer: 2 },
     { question: "In which year did World War II end?", category: "General Knowledge", options: ["1945", "1942", "1950", "1899"], answer: 0 },
     { question: "Who invented the equals sign (=) ?", category: "Math", options: ["Joseph Huddart", "Leonhard Euler", "William Oughtred", "Robert Recorde"], answer: 3 },
-    { question: "What is the square root of 144?", category: "Math", options: ["10", "11", "12", "13"], answer: 2 },
+    { question: "Who discovered Derivatives?", category: "Math", options: ["Gottfried Leibniz", "Vincenzo Riccati", "William Playfair", " Leonhard Euler"], answer: 0 },
     { question: "Choose the correct spelling:", category: "English", options: ["Recieve", "Receive", "Receeve", "Receiv"], answer: 1 },
     { question: "Synonym of 'Happy'?", category: "English", options: ["Sad", "Angry", "Joyful", "Upset"], answer: 2 },
     { question: "Who wrote 'Muna Madan'?", category: "Nepali", options: ["Laxmi Prasad Devkota", "Bhanubhakta", "Parijat", "Lekhnath Paudyal"], answer: 0 },
