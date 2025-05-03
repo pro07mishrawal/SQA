@@ -118,8 +118,7 @@
     }
   </style>
 </head>
-<body>
-  {
+body{
   font-family: Arial, sans-serif;
   background: url('Kbc_nepal_-_poster.jpg') no-repeat center center fixed;
   background-size: cover;
