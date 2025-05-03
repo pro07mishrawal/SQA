@@ -23,6 +23,7 @@ body {
   margin: 0;
   padding: 20px;
 }
+background: url('images/kbc_nepal_poster.jpg') no-repeat center center fixed;
 
       font-family: Arial, sans-serif;
       background-color: #0f3057;
