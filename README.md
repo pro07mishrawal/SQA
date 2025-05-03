@@ -191,7 +191,7 @@ font-family: Arial, sans-serif;
     { question: "What is the chemical symbol of water?", category: "Chemistry", options: ["H2O", "O2", "CO2", "HO2"], answer: 0 },
     { question: "Atomic number of Oxygen?", category: "Chemistry", options: ["6", "7", "8", "9"], answer: 2 },
     { question: "What is the speed of light?", category: "Physics", options: ["299,792,458 m/s", "300,000,000 m/s", "150,000,000 m/s", "3,000 m/s"], answer: 0 },
-    { question: "Who discovered gravity?", category: "Physics", options: ["Einstein", "Newton", "Tesla", "Faraday"], answer: 1 }
+    { question: "A spaceship moves at 0.8c. What is the Lorentz factor γ?", category: "Physics", options: ["1.25", "0.6", "5.0", "1.67"], answer: 3 }
   ];
 
      const prizeLevels = [1000, 5000, 10000, 40000, 100000, 160000, 500000, 640000, 1250000, 2500000, 50000000, 10000000];
