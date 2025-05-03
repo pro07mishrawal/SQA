@@ -178,9 +178,19 @@
     };
 
     const questions = [
-      { question: "What is the capital of Nepal?", category: "General Knowledge", options: ["Pokhara", "Biratnagar", "Kathmandu", "Lalitpur"], answer: 2 },
-      // ... other questions
-    ];
+    { question: "What is the capital of Nepal?", category: "General Knowledge", options: ["Pokhara", "Biratnagar", "Kathmandu", "Lalitpur"], answer: 2 },
+    { question: "Which planet is known as the Red Planet?", category: "General Knowledge", options: ["Earth", "Venus", "Mars", "Jupiter"], answer: 2 },
+    { question: "What is 12 x 8?", category: "Math", options: ["96", "84", "108", "112"], answer: 0 },
+    { question: "What is the square root of 144?", category: "Math", options: ["10", "11", "12", "13"], answer: 2 },
+    { question: "Choose the correct spelling:", category: "English", options: ["Recieve", "Receive", "Receeve", "Receiv"], answer: 1 },
+    { question: "Synonym of 'Happy'?", category: "English", options: ["Sad", "Angry", "Joyful", "Upset"], answer: 2 },
+    { question: "Who wrote 'Muna Madan'?", category: "Nepali", options: ["Laxmi Prasad Devkota", "Bhanubhakta", "Parijat", "Lekhnath Paudyal"], answer: 0 },
+    { question: "Nepali New Year falls on?", category: "Nepali", options: ["Baisakh 1", "Ashad 15", "Kartik 5", "Chaitra 30"], answer: 0 },
+    { question: "What is the chemical symbol of water?", category: "Chemistry", options: ["H2O", "O2", "CO2", "HO2"], answer: 0 },
+    { question: "Atomic number of Oxygen?", category: "Chemistry", options: ["6", "7", "8", "9"], answer: 2 },
+    { question: "What is the speed of light?", category: "Physics", options: ["299,792,458 m/s", "300,000,000 m/s", "150,000,000 m/s", "3,000 m/s"], answer: 0 },
+    { question: "Who discovered gravity?", category: "Physics", options: ["Einstein", "Newton", "Tesla", "Faraday"], answer: 1 }
+  ];
 
     const prizeLevels = [1000, 2000, 5000, 10000, 20000, 40000, 80000, 160000, 320000, 640000, 1250000, 2500000];
 
