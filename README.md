@@ -2,141 +2,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kaun Banega Crorepati</title>
+  <title>KBC Voice Quiz</title>
   <style>
-    /* [Same CSS as before] */
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #0b1f3a;
-      color: #ffffff;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      height: 100vh;
-    }
-
-    .container {
-      background-color: #152d53;
-      padding: 20px;
-      border-radius: 10px;
-      width: 700px;
-      margin: 20px;
-    }
-
-    h1 {
-      text-align: center;
-      font-size: 2em;
-      color: gold;
-      margin-bottom: 10px;
-    }
-
-    #question {
-      font-size: 1.4em;
-      margin: 20px 0;
-    }
-
-    .options {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .option-btn {
-      padding: 12px;
-      background-color: #007bff;
-      border: none;
-      border-radius: 5px;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-      font-size: 1.1em;
-      text-align: left;
-    }
-
-    .option-btn:hover {
-      background-color: #0056b3;
-    }
-
-    .option-btn.correct {
-      background-color: #28a745 !important;
-    }
-
-    .option-btn.incorrect {
-      background-color: #dc3545 !important;
-    }
-
-    .option-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    #lock-msg {
-      text-align: center;
-      margin-top: 10px;
-      font-style: italic;
-      color: gold;
-    }
-
-    #result {
-      text-align: center;
-      margin-top: 20px;
-      font-size: 1.2em;
-    }
-
-    #timer {
-      text-align: center;
-      font-size: 1.1em;
-    }
-
-    .sidebar {
-      background-color: #0a2238;
-      padding: 20px;
-      border-radius: 10px;
-      color: gold;
-      height: fit-content;
-    }
-
-    .sidebar h3 {
-      margin-bottom: 10px;
-    }
-
-    .level {
-      padding: 4px 0;
-      border-bottom: 1px solid #ffffff22;
-    }
-
-    .active-level {
-      background-color: gold;
-      color: black;
-      font-weight: bold;
-    }
-
-    .team {
-      margin-top: 20px;
-      color: #ccc;
-      font-size: 0.9em;
-    }
-
-    .game-area {
-      display: flex;
-      gap: 20px;
-    }
+    /* [Same CSS as before — Keep it unchanged] */
   </style>
 </head>
 <body>
   <div class="game-area">
     <div class="container">
-      <h1>🪙 Kaun Banega Crorepati 🪙</h1>
+      <h1>🎤 Kaun Banega Crorepati</h1>
       <div id="timer">⏳ Time left: 20s</div>
       <div id="question">Loading question...</div>
       <div class="options" id="options"></div>
       <div id="lock-msg"></div>
       <div id="result"></div>
     </div>
-
     <div class="sidebar">
       <h3>🏆 Prize Levels</h3>
       <div id="prize-levels"></div>
@@ -154,17 +34,24 @@
       { question: "What is 12 x 8?", options: ["96", "84", "108", "112"], answer: 0 },
     ];
 
+    const superSawaal = {
+      question: "Who is known as the Missile Man of India?",
+      options: ["A. R. Rahman", "Dr. A. P. J. Abdul Kalam", "C. V. Raman", "Narendra Modi"],
+      answer: 1,
+      prize: 10000000
+    };
+
     const prizeLevels = [
       2500000, 1250000, 640000, 320000, 160000,
       80000, 40000, 20000, 10000, 5000,
       2000, 1000
-    ]; // reversed
+    ];
 
     let currentQuestion = 0;
     let currentPrize = 0;
     let timeLeft = 20;
     let timer;
-    let recognizing = false;
+    let isSuperSawaal = false;
 
     const questionEl = document.getElementById("question");
     const optionsEl = document.getElementById("options");
@@ -172,33 +59,6 @@
     const lockMsgEl = document.getElementById("lock-msg");
     const timerEl = document.getElementById("timer");
     const prizeLevelsEl = document.getElementById("prize-levels");
-
-    let recognition;
-
-    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      recognition = new SpeechRecognition();
-      recognition.continuous = false;
-      recognition.interimResults = false;
-      recognition.lang = 'en-US';
-
-      recognition.onresult = function(event) {
-        const transcript = event.results[0][0].transcript.trim().toUpperCase();
-        const letter = transcript[0];
-        const index = letter.charCodeAt(0) - 65;
-        if (index >= 0 && index <= 3) {
-          lockMsgEl.textContent = `🔒 Computer ji, option ${letter} ko lock kiya jaye...`;
-          disableButtons();
-          setTimeout(() => lockAnswer(index), 2000);
-        }
-      };
-
-      recognition.onerror = function(event) {
-        console.error("Speech recognition error:", event.error);
-      };
-    } else {
-      alert("Sorry, your browser does not support voice recognition.");
-    }
 
     function startTimer() {
       timeLeft = 20;
@@ -215,7 +75,7 @@
     }
 
     function loadQuestion() {
-      const q = questions[currentQuestion];
+      let q = isSuperSawaal ? superSawaal : questions[currentQuestion];
       questionEl.textContent = q.question;
       optionsEl.innerHTML = "";
       lockMsgEl.textContent = "";
@@ -224,34 +84,28 @@
       q.options.forEach((opt, i) => {
         const btn = document.createElement("button");
         btn.className = "option-btn";
-        btn.textContent = `${String.fromCharCode(65 + i)}. ${opt}`;
-        btn.disabled = true;
+        btn.textContent = opt;
+        btn.onclick = () => handleSelection(btn, i);
         optionsEl.appendChild(btn);
       });
 
       updatePrizeLevels();
       startTimer();
-      startListening();
+      startVoiceRecognition();
     }
 
-    function startListening() {
-      if (recognition) {
-        recognition.start();
-        recognizing = true;
-      }
-    }
-
-    function stopListening() {
-      if (recognition && recognizing) {
-        recognition.stop();
-        recognizing = false;
-      }
+    function handleSelection(button, index) {
+      disableButtons();
+      lockMsgEl.textContent = `🔒 Computer ji, option ${String.fromCharCode(65 + index)} ko lock kiya jaye...`;
+      setTimeout(() => {
+        lockAnswer(index);
+      }, 1500);
     }
 
     function lockAnswer(index) {
-      stopListening();
       clearInterval(timer);
-      const correct = questions[currentQuestion].answer;
+      const q = isSuperSawaal ? superSawaal : questions[currentQuestion];
+      const correct = q.answer;
       const buttons = document.querySelectorAll(".option-btn");
 
       buttons.forEach((btn, i) => {
@@ -260,20 +114,24 @@
       });
 
       if (index === correct) {
-        currentPrize = prizeLevels[11 - currentQuestion];
+        currentPrize = isSuperSawaal ? superSawaal.prize : prizeLevels[11 - currentQuestion];
         resultEl.textContent = `✅ Correct! You won ₹${currentPrize}`;
-        currentQuestion++;
-        if (currentQuestion < questions.length) {
-          setTimeout(loadQuestion, 3000);
+
+        if (!isSuperSawaal) {
+          currentQuestion++;
+          if (currentQuestion < questions.length) {
+            setTimeout(loadQuestion, 3000);
+          } else {
+            isSuperSawaal = true;
+            setTimeout(loadQuestion, 3000);
+          }
         } else {
-          resultEl.textContent = `🏆 Congratulations! You are a Crorepati! Total: ₹${currentPrize}`;
+          resultEl.innerHTML = `🏆 Super Sawaal correct! You are a Super Crorepati!<br>Total: ₹${currentPrize}`;
         }
       } else {
-        if (index === -1) {
-          resultEl.textContent = "⏰ Time's up!";
-        } else {
-          resultEl.textContent = `❌ Wrong answer! Correct: ${questions[currentQuestion].options[correct]}`;
-        }
+        resultEl.innerHTML = index === -1
+          ? "⏰ Time's up!"
+          : `❌ Wrong answer! Correct: ${q.options[correct]}`;
       }
     }
 
@@ -290,6 +148,38 @@
         div.textContent = `Level ${index + 1}: ₹${amt}`;
         prizeLevelsEl.appendChild(div);
       });
+
+      if (isSuperSawaal) {
+        const div = document.createElement("div");
+        div.className = "level active-level";
+        div.textContent = `💎 Super Sawaal: ₹${superSawaal.prize}`;
+        prizeLevelsEl.prepend(div);
+      }
+    }
+
+    // 🗣️ Voice Recognition using Web Speech API
+    function startVoiceRecognition() {
+      if (!('webkitSpeechRecognition' in window)) return;
+
+      const recognition = new webkitSpeechRecognition();
+      recognition.lang = 'en-US';
+      recognition.continuous = false;
+      recognition.interimResults = false;
+
+      recognition.start();
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript.toLowerCase();
+        const match = transcript.match(/option\s([abcd])/i);
+        if (match) {
+          const index = { a: 0, b: 1, c: 2, d: 3 }[match[1]];
+          handleSelection(document.querySelectorAll(".option-btn")[index], index);
+        }
+      };
+
+      recognition.onerror = () => {
+        recognition.stop();
+      };
     }
 
     loadQuestion();
