@@ -4,60 +4,63 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Kaun Banega Crorepati</title>
   <style>
-    /* [Same CSS as before] */
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #0b1f3a;
+      font-family: Arial, sans-serif;
+      background-color: #0f3057;
       color: #ffffff;
-      margin: 0;
-      padding: 0;
       display: flex;
-      justify-content: center;
+      justify-content: space-around;
       align-items: flex-start;
       height: 100vh;
+      margin: 0;
+      padding: 20px;
     }
 
     .container {
-      background-color: #152d53;
+      max-width: 600px;
+      background-color: #00587a;
+      border-radius: 10px;
+      padding: 20px;
+      flex: 1;
+    }
+
+    .sidebar {
+      background-color: #003f5c;
       padding: 20px;
       border-radius: 10px;
-      width: 700px;
-      margin: 20px;
+      margin-left: 20px;
+      min-width: 250px;
     }
 
     h1 {
       text-align: center;
-      font-size: 2em;
-      color: gold;
-      margin-bottom: 10px;
     }
 
     #question {
       font-size: 1.4em;
-      margin: 20px 0;
+      margin-bottom: 20px;
     }
 
     .options {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 10px;
     }
 
     .option-btn {
-      padding: 12px;
-      background-color: #007bff;
+      padding: 15px;
+      background-color: #00adb5;
       border: none;
       border-radius: 5px;
       color: white;
       font-weight: bold;
       cursor: pointer;
-      transition: 0.3s;
+      transition: background-color 0.3s;
       font-size: 1.1em;
-      text-align: left;
     }
 
-    .option-btn:hover {
-      background-color: #0056b3;
+    .option-btn.selected {
+      background-color: #ffaa00 !important;
     }
 
     .option-btn.correct {
@@ -69,225 +72,222 @@
     }
 
     .option-btn:disabled {
-      opacity: 0.6;
       cursor: not-allowed;
     }
 
-    #lock-msg {
+    .lifeline-box {
+      margin-top: 20px;
       text-align: center;
-      margin-top: 10px;
-      font-style: italic;
-      color: gold;
     }
 
-    #result {
-      text-align: center;
+    #result, #levelComplete {
       margin-top: 20px;
-      font-size: 1.2em;
+      font-size: 1.1em;
+      text-align: center;
     }
 
     #timer {
-      text-align: center;
-      font-size: 1.1em;
-    }
-
-    .sidebar {
-      background-color: #0a2238;
-      padding: 20px;
-      border-radius: 10px;
-      color: gold;
-      height: fit-content;
-    }
-
-    .sidebar h3 {
+      font-size: 1.2em;
       margin-bottom: 10px;
+      text-align: center;
     }
 
     .level {
-      padding: 4px 0;
+      padding: 5px 0;
       border-bottom: 1px solid #ffffff22;
     }
 
     .active-level {
-      background-color: gold;
-      color: black;
+      color: gold;
+      font-weight: bold;
+    }
+
+    .super-sawaal {
+      background-color: orange;
+      padding: 2px 5px;
+      border-radius: 5px;
+      color: #000;
       font-weight: bold;
     }
 
     .team {
       margin-top: 20px;
-      color: #ccc;
       font-size: 0.9em;
-    }
-
-    .game-area {
-      display: flex;
-      gap: 20px;
+      color: #aaa;
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <div class="game-area">
-    <div class="container">
-      <h1>🪙 Kaun Banega Crorepati 🪙</h1>
-      <div id="timer">⏳ Time left: 20s</div>
-      <div id="question">Loading question...</div>
-      <div class="options" id="options"></div>
-      <div id="lock-msg"></div>
-      <div id="result"></div>
-    </div>
-
-    <div class="sidebar">
-      <h3>🏆 Prize Levels</h3>
-      <div id="prize-levels"></div>
-      <div class="team">
-        <p>Created by:</p>
-        <p>Promish Rawal<br>Sandesh GC<br>Subodh Karki<br>Saurav Thapa<br>Aaryan Bohora</p>
+  <div class="container">
+    <h1>🪙 Kaun Banega Crorepati 🪙</h1>
+    <div id="prize">Prize: ₹0</div>
+    <div id="category">Category: General Knowledge</div>
+    <div id="timer">⏳ Time left: 20s</div>
+    <div id="question-box">
+      <h2 id="question">Loading...</h2>
+      <div class="options">
+        <button class="option-btn" onclick="selectOption(0)">A</button>
+        <button class="option-btn" onclick="selectOption(1)">B</button>
+        <button class="option-btn" onclick="selectOption(2)">C</button>
+        <button class="option-btn" onclick="selectOption(3)">D</button>
       </div>
+      <div style="text-align:center; margin-top:10px">
+        <button onclick="lockAnswer()">🔒 Lock Answer</button>
+      </div>
+    </div>
+    <div class="lifeline-box">
+      <button id="lifeline-btn" onclick="useLifeline()">Use 50:50 Lifeline</button>
+      <button onclick="quitGame()">Quit</button>
+    </div>
+    <div id="result"></div>
+    <div id="levelComplete"></div>
+  </div>
+
+  <div class="sidebar">
+    <h3>🏆 Prize Levels</h3>
+    <div id="prize-levels"></div>
+    <div class="team">
+      <p>Created by:</p>
+      <p>Promish Rawal<br>Sandesh GC<br>Subodh Karki<br>Saurav Thapa<br>Aaryan Bohora</p>
     </div>
   </div>
 
   <script>
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.continuous = true;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
+    recognition.start();
+
+    recognition.onresult = function(event) {
+      const transcript = event.results[event.results.length - 1][0].transcript.toLowerCase();
+      if (transcript.includes("lock")) {
+        lockAnswer();
+      } else if (transcript.includes("pause")) {
+        clearInterval(timerInterval);
+      } else if (transcript.includes("resume")) {
+        startTimer();
+      } else {
+        ['a','b','c','d'].forEach((val, idx) => {
+          if (transcript.includes(val)) {
+            selectOption(idx);
+          }
+        });
+      }
+    };
+
     const questions = [
-      { question: "What is the capital of Nepal?", options: ["Pokhara", "Biratnagar", "Kathmandu", "Lalitpur"], answer: 2 },
-      { question: "Which planet is known as the Red Planet?", options: ["Earth", "Venus", "Mars", "Jupiter"], answer: 2 },
-      { question: "What is 12 x 8?", options: ["96", "84", "108", "112"], answer: 0 },
+      { question: "What is the capital of Nepal?", category: "General Knowledge", options: ["Pokhara", "Biratnagar", "Kathmandu", "Lalitpur"], answer: 2 },
+      // ... other questions
     ];
 
-    const prizeLevels = [
-      2500000, 1250000, 640000, 320000, 160000,
-      80000, 40000, 20000, 10000, 5000,
-      2000, 1000
-    ]; // reversed
+    const prizeLevels = [1000, 2000, 5000, 10000, 20000, 40000, 80000, 160000, 320000, 640000, 1250000, 2500000];
 
     let currentQuestion = 0;
+    let selectedOption = -1;
     let currentPrize = 0;
+    let lifelineUsed = false;
+    let timerInterval;
     let timeLeft = 20;
-    let timer;
-    let recognizing = false;
 
-    const questionEl = document.getElementById("question");
-    const optionsEl = document.getElementById("options");
-    const resultEl = document.getElementById("result");
-    const lockMsgEl = document.getElementById("lock-msg");
-    const timerEl = document.getElementById("timer");
-    const prizeLevelsEl = document.getElementById("prize-levels");
-
-    let recognition;
-
-    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      recognition = new SpeechRecognition();
-      recognition.continuous = false;
-      recognition.interimResults = false;
-      recognition.lang = 'en-US';
-
-      recognition.onresult = function(event) {
-        const transcript = event.results[0][0].transcript.trim().toUpperCase();
-        const letter = transcript[0];
-        const index = letter.charCodeAt(0) - 65;
-        if (index >= 0 && index <= 3) {
-          lockMsgEl.textContent = `🔒 Computer ji, option ${letter} ko lock kiya jaye...`;
-          disableButtons();
-          setTimeout(() => lockAnswer(index), 2000);
-        }
-      };
-
-      recognition.onerror = function(event) {
-        console.error("Speech recognition error:", event.error);
-      };
-    } else {
-      alert("Sorry, your browser does not support voice recognition.");
-    }
+    const optionBtns = document.querySelectorAll(".option-btn");
 
     function startTimer() {
       timeLeft = 20;
-      timerEl.textContent = `⏳ Time left: ${timeLeft}s`;
-      clearInterval(timer);
-      timer = setInterval(() => {
+      document.getElementById("timer").textContent = `⏳ Time left: ${timeLeft}s`;
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
         timeLeft--;
-        timerEl.textContent = `⏳ Time left: ${timeLeft}s`;
+        document.getElementById("timer").textContent = `⏳ Time left: ${timeLeft}s`;
         if (timeLeft <= 0) {
-          clearInterval(timer);
-          lockAnswer(-1);
+          clearInterval(timerInterval);
+          lockAnswer();
         }
       }, 1000);
     }
 
     function loadQuestion() {
+      selectedOption = -1;
       const q = questions[currentQuestion];
-      questionEl.textContent = q.question;
-      optionsEl.innerHTML = "";
-      lockMsgEl.textContent = "";
-      resultEl.textContent = "";
-
-      q.options.forEach((opt, i) => {
-        const btn = document.createElement("button");
-        btn.className = "option-btn";
-        btn.textContent = `${String.fromCharCode(65 + i)}. ${opt}`;
-        btn.disabled = true;
-        optionsEl.appendChild(btn);
+      document.getElementById("question").textContent = q.question;
+      document.getElementById("category").textContent = `Category: ${q.category}`;
+      optionBtns.forEach((btn, index) => {
+        btn.textContent = `${String.fromCharCode(65 + index)}. ${q.options[index]}`;
+        btn.disabled = false;
+        btn.style.visibility = "visible";
+        btn.classList.remove("correct", "incorrect", "selected");
       });
-
+      document.getElementById("result").textContent = "";
+      document.getElementById("levelComplete").textContent = "";
+      document.getElementById("prize").textContent = `Prize: ₹${currentPrize}`;
       updatePrizeLevels();
       startTimer();
-      startListening();
     }
 
-    function startListening() {
-      if (recognition) {
-        recognition.start();
-        recognizing = true;
-      }
+    function selectOption(index) {
+      selectedOption = index;
+      optionBtns.forEach(btn => btn.classList.remove("selected"));
+      optionBtns[index].classList.add("selected");
     }
 
-    function stopListening() {
-      if (recognition && recognizing) {
-        recognition.stop();
-        recognizing = false;
-      }
-    }
-
-    function lockAnswer(index) {
-      stopListening();
-      clearInterval(timer);
+    function lockAnswer() {
+      if (selectedOption === -1) return;
+      clearInterval(timerInterval);
       const correct = questions[currentQuestion].answer;
-      const buttons = document.querySelectorAll(".option-btn");
-
-      buttons.forEach((btn, i) => {
-        if (i === correct) btn.classList.add("correct");
-        if (i === index && index !== correct) btn.classList.add("incorrect");
+      optionBtns.forEach((btn, idx) => {
+        btn.disabled = true;
+        if (idx === correct) btn.classList.add("correct");
+        if (idx === selectedOption && idx !== correct) btn.classList.add("incorrect");
       });
-
-      if (index === correct) {
-        currentPrize = prizeLevels[11 - currentQuestion];
-        resultEl.textContent = `✅ Correct! You won ₹${currentPrize}`;
+      if (selectedOption === correct) {
+        currentPrize = prizeLevels[currentQuestion];
+        document.getElementById("result").textContent = `✅ Correct! You won ₹${currentPrize}`;
+        document.getElementById("levelComplete").textContent = `🎉 Level ${currentQuestion + 1} Complete!`;
         currentQuestion++;
         if (currentQuestion < questions.length) {
-          setTimeout(loadQuestion, 3000);
+          setTimeout(loadQuestion, 2000);
         } else {
-          resultEl.textContent = `🏆 Congratulations! You are a Crorepati! Total: ₹${currentPrize}`;
+          document.getElementById("result").textContent = `🏆 Congratulations! You are a Crorepati! Total: ₹${currentPrize}`;
         }
       } else {
-        if (index === -1) {
-          resultEl.textContent = "⏰ Time's up!";
-        } else {
-          resultEl.textContent = `❌ Wrong answer! Correct: ${questions[currentQuestion].options[correct]}`;
+        document.getElementById("result").textContent = `❌ Wrong! Correct answer: ${questions[currentQuestion].options[correct]}`;
+      }
+    }
+
+    function useLifeline() {
+      if (lifelineUsed) return;
+      lifelineUsed = true;
+      document.getElementById("lifeline-btn").disabled = true;
+      const correct = questions[currentQuestion].answer;
+      let hidden = 0;
+      while (hidden < 2) {
+        const rand = Math.floor(Math.random() * 4);
+        if (rand !== correct && optionBtns[rand].style.visibility !== "hidden") {
+          optionBtns[rand].style.visibility = "hidden";
+          hidden++;
         }
       }
     }
 
-    function disableButtons() {
-      document.querySelectorAll(".option-btn").forEach(btn => btn.disabled = true);
+    function quitGame() {
+      clearInterval(timerInterval);
+      document.getElementById("result").textContent = `🏁 You quit! Total winnings: ₹${currentPrize}`;
+      optionBtns.forEach(btn => btn.disabled = true);
+      document.getElementById("lifeline-btn").disabled = true;
+      document.getElementById("timer").textContent = "";
     }
 
     function updatePrizeLevels() {
+      const prizeLevelsEl = document.getElementById("prize-levels");
       prizeLevelsEl.innerHTML = "";
-      prizeLevels.forEach((amt, i) => {
-        const index = 11 - i;
+      prizeLevels.forEach((amt, idx) => {
         const div = document.createElement("div");
-        div.className = "level" + (index === currentQuestion ? " active-level" : "");
-        div.textContent = `Level ${index + 1}: ₹${amt}`;
+        let levelClass = "level";
+        if (idx === currentQuestion) levelClass += " active-level";
+        if (idx === 6) div.innerHTML = `<span class='super-sawaal'>Super Sawaal</span> - ₹${amt}`;
+        else div.textContent = `Level ${idx + 1}: ₹${amt}`;
+        div.className = levelClass;
         prizeLevelsEl.appendChild(div);
       });
     }
