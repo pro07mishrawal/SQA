@@ -4,21 +4,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Ko Bancha Crorepati</title>
   <style>
-  
-body {
-  font-family: Arial, sans-serif;
-  background: url('kbc_nepal_poster.jpg') no-repeat center center fixed;
-  background-size: cover;
-  color: #ffffff;
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-start;
-  height: 100vh;
-  margin: 0;
-  padding: 20px;
-}
-      {
-background: url('images/kbc_nepal_poster.jpg') no-repeat center center fixed;}
 font-family: Arial, sans-serif;
       background-color: #0f3057;
       color: #ffffff;
@@ -133,6 +118,15 @@ font-family: Arial, sans-serif;
   </style>
 </head>
 <body>
+<div style="
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: -1;">
+  
+</div>
+background: url('images/kbc_nepal_poster.jpg') no-repeat center center fixed;
+
 <div style="
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
