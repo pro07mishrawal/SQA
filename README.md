@@ -180,8 +180,8 @@ font-family: Arial, sans-serif;
     };
 
     const questions = [
-    { question: "What is the capital of Nepal?", category: "General Knowledge", options: ["Pokhara", "Biratnagar", "Kathmandu", "Lalitpur"], answer: 2 },
-    { question: "Which planet is known as the Red Planet?", category: "General Knowledge", options: ["Earth", "Venus", "Mars", "Jupiter"], answer: 2 },
+    { question: "What is the capital of Australia?", category: "General Knowledge", options: ["Sydney", " Melbourne, "Canberra", "Brisbane"], answer: 2 },
+    { question: "In which year did World War II end?", category: "General Knowledge", options: ["1945", "1942", "1950", "1899"], answer: 0 },
     { question: "What is 12 x 8?", category: "Math", options: ["96", "84", "108", "112"], answer: 0 },
     { question: "What is the square root of 144?", category: "Math", options: ["10", "11", "12", "13"], answer: 2 },
     { question: "Choose the correct spelling:", category: "English", options: ["Recieve", "Receive", "Receeve", "Receiv"], answer: 1 },
