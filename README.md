@@ -1,10 +1,10 @@
-<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ko Bancha Crorepati</title>
+  <title>Kaun Banega Crorepati</title>
   <style>
-font-family: Arial, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
       background-color: #0f3057;
       color: #ffffff;
       display: flex;
@@ -118,12 +118,11 @@ font-family: Arial, sans-serif;
   </style>
 </head>
 <body>
-
   <div class="container">
     <h1>🪙 Ko Banxa Crorepati 🪙</h1>
-    <div id="prize">Prize: ₹1000</div>
+    <div id="prize">Prize: ₹0</div>
     <div id="category">Category: General Knowledge</div>
-    <div id="timer">⏳ Time left: 30s</div>
+    <div id="timer">⏳ Time left: 20s</div>
     <div id="question-box">
       <h2 id="question">Loading...</h2>
       <div class="options">
@@ -177,7 +176,7 @@ font-family: Arial, sans-serif;
       }
     };
 
-    const questions = [
+const questions = [
     { question: "What is the capital of Australia?", category: "General Knowledge", options: ["Sydney", " Melbourne, "Canberra", "Brisbane"], answer: 2 },
     { question: "In which year did World War II end?", category: "General Knowledge", options: ["1945", "1942", "1950", "1899"], answer: 0 },
     { question: "Who invented the equals sign (=) ?", category: "Math", options: ["Joseph Huddart", "Leonhard Euler", "William Oughtred", "Robert Recorde"], answer: 3 },
@@ -193,7 +192,7 @@ font-family: Arial, sans-serif;
   ];
 
      const prizeLevels = [1000, 5000, 10000, 40000, 100000, 160000, 500000, 640000, 1250000, 2500000, 50000000, 10000000];
-
+    
     let currentQuestion = 0;
     let selectedOption = -1;
     let currentPrize = 0;
