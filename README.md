@@ -119,8 +119,6 @@ font-family: Arial, sans-serif;
 </head>
 <body>
 
-
-
   <div class="container">
     <h1>🪙 Ko Banxa Crorepati 🪙</h1>
     <div id="prize">Prize: ₹1000</div>
